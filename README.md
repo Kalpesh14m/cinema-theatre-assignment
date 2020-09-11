@@ -6,8 +6,8 @@
 ```
 profiles: dev
 dbName: Your MySQL database Name
-dbUser: Your MySQL database User Name
-dbPass: Your MySQL database User Pass
+dbUser: Your MySQL server User Name
+dbPass: Your MySQL server User Pass
 port: Port number on which you want to run your server
 ```
 
