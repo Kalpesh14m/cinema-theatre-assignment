@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kalpesh.cinematheatre.constant.Constant;
@@ -43,15 +44,17 @@ public class HallController {
 
 	@ApiOperation(value = "Get Cinema hall with hall ID")
 	@GetMapping("/{hallId}")
-	public CinemaHall usersById(
+	public CinemaHall hallById(
 			@ApiParam(value = "Taking HallId as a path Variable", required = true) @PathVariable Long hallId) {
 		return hallService.getHallById(hallId);
 	}
 
 	@ApiOperation(value = "Get all registered Cinema halls")
 	@GetMapping("/")
-	public List<CinemaHall> halls() {
-		return hallService.getHalls();
+	public List<CinemaHall> halls(
+			@ApiParam(value = "Taking Hall Name or Hall City for search operation", required = false) @RequestParam(required = false, name = "Hall Name") String chName,
+			@RequestParam(required = false, name = "Hall City") String chCity) {
+		return hallService.getHalls(chName, chCity);
 	}
 
 	@ApiOperation(value = "Update Cinema Hall Information")

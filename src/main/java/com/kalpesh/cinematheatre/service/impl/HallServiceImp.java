@@ -41,8 +41,8 @@ public class HallServiceImp implements HallService {
 	}
 
 	@Override
-	public List<CinemaHall> getHalls() {
-		return hallRepo.findAll();
+	public List<CinemaHall> getHalls(String chName, String chCity) {
+		return hallRepo.search(chName, chCity);
 	}
 
 	@Override
