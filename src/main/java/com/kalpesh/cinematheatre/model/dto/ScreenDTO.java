@@ -52,8 +52,8 @@ public class ScreenDTO {
 		return sShowTime;
 	}
 
-	public void setsShowTime(LocalTime sShowTime) {
-		this.sShowTime = sShowTime;
+	public void setsShowTime(String sShowTime) {
+		this.sShowTime = LocalTime.parse(sShowTime);
 	}
 
 }

@@ -1,23 +1,23 @@
 package com.movie.exception;
 
-public class AddressNotFoundException extends RuntimeException {
+public class NotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
-	private int status;
-	String message;
 
-	public AddressNotFoundException(String message) {
+	private int statusCode;
+	private String message;
+
+	public NotFoundException(String message) {
 		super(message);
 		this.message = message;
 	}
 
-	public AddressNotFoundException(String message, int status) {
+	public NotFoundException(String message, int status) {
 		super(message);
 		this.message = message;
-		this.status = status;
+		this.statusCode = status;
 	}
 
-	@Override
 	public String getMessage() {
 		return message;
 	}
@@ -27,11 +27,11 @@ public class AddressNotFoundException extends RuntimeException {
 	}
 
 	public void setStatus(int status) {
-		this.status = status;
+		this.statusCode = status;
 	}
 
 	public int getStatus() {
-		return status;
+		return statusCode;
 	}
 
 }

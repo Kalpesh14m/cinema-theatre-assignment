@@ -14,7 +14,7 @@ import com.kalpesh.cinematheatre.model.dto.ScreenDTO;
 import com.kalpesh.cinematheatre.repo.HallRepo;
 import com.kalpesh.cinematheatre.repo.ScreenRepo;
 import com.kalpesh.cinematheatre.service.ScreenService;
-import com.movie.exception.AddressNotFoundException;
+import com.movie.exception.NotFoundException;
 
 @Service
 public class ScreenServiceImpl implements ScreenService {
@@ -39,7 +39,7 @@ public class ScreenServiceImpl implements ScreenService {
 	public List<Screen> getScreenByHallId(Long hallId) {
 		List<Screen> screen = screenRepo.findOrderByHall(hallId);
 		if (screen == null) {
-			throw new AddressNotFoundException(Constant.SCREEN_DETAILS_NOT_fOUND, Constant.NOT_FOUND_RESPONSE_CODE);
+			throw new NotFoundException(Constant.SCREEN_DETAILS_NOT_fOUND);
 		}
 		return screen;
 	}
@@ -48,7 +48,7 @@ public class ScreenServiceImpl implements ScreenService {
 	public boolean updateScreen(Screen screenObj) {
 		Optional<Screen> maybeScreenPresent = screenRepo.findById(screenObj.getScreenId());
 		if (!maybeScreenPresent.isPresent()) {
-			throw new AddressNotFoundException(Constant.SCREEN_DETAILS_NOT_fOUND, Constant.NOT_FOUND_RESPONSE_CODE);
+			throw new NotFoundException(Constant.SCREEN_DETAILS_NOT_fOUND);
 		}
 		screenObj.setHall(maybeScreenPresent.get().getHall());
 		screenRepo.save(screenObj);

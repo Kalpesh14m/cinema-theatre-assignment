@@ -38,16 +38,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	}
 
-	@ExceptionHandler(CinemaHallException.class)
-	public ResponseEntity<Response> handleUserException(CinemaHallException ex) {
-		Response customErrorDetails = new Response(LocalDateTime.now(), ex.getLocalizedMessage(),
-				HttpStatus.BAD_REQUEST.value());
-
-		return new ResponseEntity<>(customErrorDetails, HttpStatus.BAD_REQUEST);
-	}
-
-	@ExceptionHandler(HallNotFoundException.class)
-	public ResponseEntity<Response> handleUserNotFoundException(HallNotFoundException ex) {
+	@ExceptionHandler(NotFoundException.class)
+	public ResponseEntity<Response> handleNotFoundException(NotFoundException ex) {
 		Response customErrorDetails = new Response(LocalDateTime.now(), ex.getLocalizedMessage(),
 				HttpStatus.BAD_REQUEST.value());
 
@@ -55,8 +47,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	}
 
-	@ExceptionHandler(HallAlreadyRegisteredException.class)
-	public ResponseEntity<Response> handleUserAlreadyRegisteredException(HallAlreadyRegisteredException ex) {
+	@ExceptionHandler(AlreadyRegisteredException.class)
+	public ResponseEntity<Response> handleAlreadyRegisteredException(AlreadyRegisteredException ex) {
 		Response customErrorDetails = new Response(LocalDateTime.now(), ex.getLocalizedMessage(),
 				HttpStatus.ALREADY_REPORTED.value());
 

@@ -2,7 +2,7 @@ package com.kalpesh.cinematheatre.model.dto;
 
 import java.time.LocalDate;
 
-public class Cinema {
+public class CinemaDTO {
 
 	private String movieName;
 	private String movieGenre;
@@ -10,7 +10,7 @@ public class Cinema {
 	private String producer;
 	private LocalDate releasedDate;
 
-	public Cinema() {
+	public CinemaDTO() {
 	}
 
 	public String getMovieName() {

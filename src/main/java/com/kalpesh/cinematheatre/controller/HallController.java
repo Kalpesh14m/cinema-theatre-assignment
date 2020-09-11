@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@RequestMapping(value = { "/hall" })
+@RequestMapping(value = "/hall")
 @Api(value = "Hall Controller")
 public class HallController {
 
@@ -34,7 +34,7 @@ public class HallController {
 	private HallService hallService;
 
 	@ApiOperation(value = "Register new Cinema Hall in database and return response")
-	@PostMapping(value = "/register", headers = "Accept=application/json")
+	@PostMapping(value = "/", headers = "Accept=application/json")
 	public ResponseEntity<Response> register(
 			@ApiParam(value = "Taking CinemaHall DTO as a RequestBody", required = true) @RequestBody CinemaHallDTO request) {
 		hallService.registerHall(request);
@@ -52,8 +52,8 @@ public class HallController {
 	@ApiOperation(value = "Get all registered Cinema halls")
 	@GetMapping("/")
 	public List<CinemaHall> halls(
-			@ApiParam(value = "Taking Hall Name or Hall City for search operation", required = false) @RequestParam(required = false, name = "Hall Name") String chName,
-			@RequestParam(required = false, name = "Hall City") String chCity) {
+			@ApiParam(value = "Taking Hall Name or Hall City for search operation", required = false) @RequestParam(required = false, name = "Hall_Name") String chName,
+			@RequestParam(required = false, name = "Hall_City") String chCity) {
 		return hallService.getHalls(chName, chCity);
 	}
 

@@ -20,7 +20,7 @@ import com.kalpesh.cinematheatre.response.Response;
 import com.kalpesh.cinematheatre.service.ScreenService;
 
 @RestController
-@RequestMapping(value = { "/screen" })
+@RequestMapping(value = "/screen")
 
 public class ScreenController {
 

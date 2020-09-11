@@ -1,16 +1,18 @@
 package com.movie.exception;
 
-public class CinemaHallException extends Exception {
+public class AlreadyRegisteredException extends RuntimeException {
+
 	private static final long serialVersionUID = 1L;
+
 	private int statusCode;
 	private String message;
 
-	public CinemaHallException(String message) {
+	public AlreadyRegisteredException(String message) {
 		super(message);
 		this.message = message;
 	}
 
-	public CinemaHallException(String message, int status) {
+	public AlreadyRegisteredException(String message, int status) {
 		super(message);
 		this.message = message;
 		this.statusCode = status;

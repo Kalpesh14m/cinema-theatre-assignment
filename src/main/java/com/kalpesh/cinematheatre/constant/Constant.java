@@ -35,4 +35,13 @@ public class Constant {
 	public static final String SCREEN_DETAILS_FOUND = "Screen details found for given Hall";
 	public static final String SCREEN_DETAILS_NOT_fOUND = " not found Screen details for given Hall";
 
+	public static final String CINEMA_FOUND = "Movie Found";
+	public static final String CINEMA_NOT_FOUND = "Movie not found!";
+	public static final String CINEMA_REGISTER_SUCESSFULLY = "Movie Registration Sucessfully Done.";
+	public static final String CINEMA_REGISTERATION_FAILED = "Movie Registration Failed";
+	public static final String CINEMA_ALREADY_REGISTER = "Movie Already register";
+	public static final String CINEMA_UPDATED_SUCESSFULLY = "Movie Details Updated Successfully";
+	public static final String CINEMA_UPDATION_FAILED = "Movie Details Updation failed";
+	public static final String CINEMA_DELETED_SUCESSFULLY = "Movie Deleted Successfully";
+
 }
