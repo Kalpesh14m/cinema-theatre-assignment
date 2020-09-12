@@ -95,5 +95,4 @@ public class CinemaHall {
 	public void setChCountry(String chCountry) {
 		this.chCountry = chCountry;
 	}
-
 }

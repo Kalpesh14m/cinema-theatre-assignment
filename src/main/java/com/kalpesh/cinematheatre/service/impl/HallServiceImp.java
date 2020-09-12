@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kalpesh.cinematheatre.constant.Constant;
+import com.kalpesh.cinematheatre.exception.AlreadyRegisteredException;
+import com.kalpesh.cinematheatre.exception.NotFoundException;
 import com.kalpesh.cinematheatre.model.CinemaHall;
 import com.kalpesh.cinematheatre.model.dto.CinemaHallDTO;
 import com.kalpesh.cinematheatre.repo.HallRepo;
 import com.kalpesh.cinematheatre.service.HallService;
-import com.movie.exception.AlreadyRegisteredException;
-import com.movie.exception.NotFoundException;
 
 @Service
 public class HallServiceImp implements HallService {
@@ -25,7 +25,7 @@ public class HallServiceImp implements HallService {
 		Optional<CinemaHall> maybeHallExists = hallRepo.findByChCityAndChName(hallDetails.getChCity(),
 				hallDetails.getChName());
 		if (maybeHallExists.isPresent()) {
-			throw new AlreadyRegisteredException(Constant.HALL_ALREADY_REGISTER);
+			throw new AlreadyRegisteredException(Constant.HALL_DETAILS_ALREADY_REGISTER);
 		}
 		CinemaHall hallEntity = new CinemaHall();
 		BeanUtils.copyProperties(hallDetails, hallEntity);
@@ -35,7 +35,7 @@ public class HallServiceImp implements HallService {
 	public CinemaHall getHallById(Long hallId) {
 		Optional<CinemaHall> maybeHall = hallRepo.findById(hallId);
 		if (!maybeHall.isPresent()) {
-			throw new NotFoundException(Constant.HALL_NOT_FOUND);
+			throw new NotFoundException(Constant.HALL_DETAILS_NOT_FOUND);
 		}
 		return maybeHall.get();
 	}
@@ -50,9 +50,9 @@ public class HallServiceImp implements HallService {
 		Optional<CinemaHall> hall = hallRepo.findById(request.getChId());
 		Optional<CinemaHall> maybeHall = hallRepo.findByChCityAndChName(request.getChCity(), request.getChName());
 		if (!hall.isPresent()) {
-			throw new NotFoundException(Constant.HALL_NOT_FOUND);
+			throw new NotFoundException(Constant.HALL_DETAILS_NOT_FOUND);
 		} else if (maybeHall.isPresent()) {
-			throw new AlreadyRegisteredException(Constant.HALL_ALREADY_REGISTER);
+			throw new AlreadyRegisteredException(Constant.HALL_DETAILS_ALREADY_REGISTER);
 		} else {
 			hallRepo.save(request);
 		}
@@ -62,7 +62,7 @@ public class HallServiceImp implements HallService {
 	public void deleteHall(Long hallId) {
 		Optional<CinemaHall> maybehall = hallRepo.findById(hallId);
 		if (!maybehall.isPresent()) {
-			throw new NotFoundException(Constant.HALL_NOT_FOUND);
+			throw new NotFoundException(Constant.HALL_DETAILS_NOT_FOUND);
 		}
 		hallRepo.deleteById(maybehall.get().getChId());
 	}

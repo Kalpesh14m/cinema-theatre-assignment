@@ -1,4 +1,4 @@
-package com.movie.exception;
+package com.kalpesh.cinematheatre.exception;
 
 import java.time.LocalDateTime;
 

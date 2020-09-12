@@ -1,4 +1,4 @@
-package com.movie.utils.exception;
+package com.kalpesh.cinematheatre.utils.exception;
 
 public class InternalServerError extends RuntimeException {
 

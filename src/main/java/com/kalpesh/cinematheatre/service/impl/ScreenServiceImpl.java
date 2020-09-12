@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kalpesh.cinematheatre.constant.Constant;
+import com.kalpesh.cinematheatre.exception.NotFoundException;
 import com.kalpesh.cinematheatre.model.CinemaHall;
 import com.kalpesh.cinematheatre.model.Screen;
 import com.kalpesh.cinematheatre.model.dto.ScreenDTO;
 import com.kalpesh.cinematheatre.repo.HallRepo;
 import com.kalpesh.cinematheatre.repo.ScreenRepo;
 import com.kalpesh.cinematheatre.service.ScreenService;
-import com.movie.exception.NotFoundException;
 
 @Service
 public class ScreenServiceImpl implements ScreenService {
@@ -37,11 +37,11 @@ public class ScreenServiceImpl implements ScreenService {
 
 	@Override
 	public List<Screen> getScreenByHallId(Long hallId) {
-		List<Screen> screen = screenRepo.findOrderByHall(hallId);
-		if (screen == null) {
+		Optional<CinemaHall> maybeHall = hallRepo.findById(hallId);
+		if (!maybeHall.isPresent()) {
 			throw new NotFoundException(Constant.SCREEN_DETAILS_NOT_fOUND);
 		}
-		return screen;
+		return maybeHall.get().getScreen();
 	}
 
 	@Override

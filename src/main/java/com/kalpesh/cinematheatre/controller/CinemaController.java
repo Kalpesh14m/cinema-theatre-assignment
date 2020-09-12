@@ -37,7 +37,7 @@ public class CinemaController {
 			@ApiParam(value = "Taking CinemaDTO as a RequestBody", required = true) @RequestBody CinemaDTO request) {
 		cinemaService.registerCinema(request);
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(new Response(Constant.CINEMA_REGISTER_SUCESSFULLY, Constant.OK_RESPONSE_CODE));
+				.body(new Response(Constant.CINEMA_DETAILS_REGISTER_SUCESSFULLY, Constant.OK_RESPONSE_CODE));
 	}
 
 	@ApiOperation(value = "Get Cinema with cinema ID")
@@ -47,26 +47,18 @@ public class CinemaController {
 		return cinemaService.getCinemaById(cinemaId);
 	}
 
-//	@ApiOperation(value = "Get all registered Cinema halls")
-//	@GetMapping("/")
-//	public List<CinemaHall> halls(
-//			@ApiParam(value = "Taking Hall Name or Hall City for search operation", required = false) @RequestParam(required = false, name = "Hall Name") String chName,
-//			@RequestParam(required = false, name = "Hall City") String chCity) {
-//		return cinemaService.getHalls(chName, chCity);
-//	}
-
 	@ApiOperation(value = "Update Movie Information")
 	@PutMapping("/")
 	public ResponseEntity<Response> updateCinemaInfo(@RequestBody CinemaUpdateDTO request) {
 		cinemaService.updateCinema(request);
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(new Response(Constant.CINEMA_UPDATED_SUCESSFULLY, Constant.OK_RESPONSE_CODE));
+				.body(new Response(Constant.CINEMA_DETAILS_UPDATED_SUCESSFULLY, Constant.OK_RESPONSE_CODE));
 	}
 
 	@DeleteMapping("/{cinemaId}")
 	public ResponseEntity<Response> deleteSource(@PathVariable Long cinemaId) {
 		cinemaService.deleteCinema(cinemaId);
 		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(new Response(Constant.CINEMA_DELETED_SUCESSFULLY, Constant.OK_RESPONSE_CODE));
+				.body(new Response(Constant.CINEMA_DETAILS_DELETED_SUCESSFULLY, Constant.OK_RESPONSE_CODE));
 	}
 }

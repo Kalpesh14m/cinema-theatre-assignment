@@ -35,17 +35,18 @@ public class Cinema {
 
 	public Cinema() {
 	}
-
-	public Cinema(Long movieId, String movieName, String movieGenre, String director, String producer,
-			LocalDate releasedDate) {
-		super();
-		this.movieId = movieId;
-		this.movieName = movieName;
-		this.movieGenre = movieGenre;
-		this.director = director;
-		this.producer = producer;
-		this.releasedDate = releasedDate;
-	}
+//
+//	public Cinema(Long movieId, String movieName, String movieGenre, String director, String producer,
+//			LocalDate releasedDate, Show movieShow) {
+//		super();
+//		this.movieId = movieId;
+//		this.movieName = movieName;
+//		this.movieGenre = movieGenre;
+//		this.director = director;
+//		this.producer = producer;
+//		this.releasedDate = releasedDate;
+//		this.movieShow = movieShow;
+//	}
 
 	public Long getMovieId() {
 		return movieId;

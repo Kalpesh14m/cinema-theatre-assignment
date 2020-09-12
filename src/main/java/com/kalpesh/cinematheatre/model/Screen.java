@@ -1,16 +1,17 @@
 package com.kalpesh.cinematheatre.model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,49 +24,37 @@ public class Screen {
 	@Column(name = "screen_id")
 	private Long screenId;
 
-	@Column(name = "ch_name", nullable = false)
-	private String chName;
-
-	@Column(name = "movie_name")
-	private String movieName;
-
 	@Column(name = "screen_booked", nullable = false)
 	private boolean sBooked;
-
-	@Column(name = "show_date")
-	private LocalDate sShowDate;
-
-	@Column(name = "show_time")
-	private LocalTime sShowTime;
 
 	@Column(name = "s_capacity", nullable = false)
 	private Long sCapacity;
 
+	@Column(name = "bookings", nullable = false)
+	private Long bookingCounter;
+
+	// Many screens can be inside one hall M->O
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinColumn(name = "hall_id")
 	@JsonIgnore
 	private CinemaHall hall;
 
-	public CinemaHall getHall() {
-		return hall;
-	}
-
-	public void setHall(CinemaHall hall) {
-		this.hall = hall;
-	}
+	// On one screen many shows can be present O->M
+	@OneToMany(mappedBy = "screen", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+			CascadeType.REFRESH }, fetch = FetchType.LAZY)
+	private List<Show> show;
 
 	public Screen() {
+		this.sBooked = false;
+		this.bookingCounter = (long) 0;
 	}
 
-	public Screen(Long screenId, String chName, String movieName, boolean sBooked, Long sCapacity, CinemaHall hall,
-			LocalDate sShowDate, LocalTime sShowTime) {
+	public Screen(Long screenId, boolean sBooked, Long sCapacity, Long bookingCounter, CinemaHall hall) {
+		super();
 		this.screenId = screenId;
-		this.chName = chName;
-		this.movieName = movieName;
-		this.sBooked = false;
+		this.sBooked = sBooked;
 		this.sCapacity = sCapacity;
-		this.sShowDate = sShowDate;
-		this.sShowTime = sShowTime;
+		this.bookingCounter = bookingCounter;
 		this.hall = hall;
 	}
 
@@ -75,22 +64,6 @@ public class Screen {
 
 	public void setScreenId(Long screenId) {
 		this.screenId = screenId;
-	}
-
-	public String getChName() {
-		return chName;
-	}
-
-	public void setChName(String chName) {
-		this.chName = chName;
-	}
-
-	public String getMovieName() {
-		return movieName;
-	}
-
-	public void setMovieName(String movieName) {
-		this.movieName = movieName;
 	}
 
 	public boolean issBooked() {
@@ -109,20 +82,28 @@ public class Screen {
 		this.sCapacity = sCapacity;
 	}
 
-	public LocalDate getsShowDate() {
-		return sShowDate;
+	public Long getBookingCounter() {
+		return bookingCounter;
 	}
 
-	public void setsShowDate(LocalDate sShowDate) {
-		this.sShowDate = sShowDate;
+	public void setBookingCounter(Long bookingCounter) {
+		this.bookingCounter = bookingCounter;
 	}
 
-	public LocalTime getsShowTime() {
-		return sShowTime;
+	public CinemaHall getHall() {
+		return hall;
 	}
 
-	public void setsShowTime(LocalTime sShowTime) {
-		this.sShowTime = sShowTime;
+	public void setHall(CinemaHall hall) {
+		this.hall = hall;
+	}
+
+	public List<Show> getShow() {
+		return show;
+	}
+
+	public void setShow(List<Show> show) {
+		this.show = show;
 	}
 
 }

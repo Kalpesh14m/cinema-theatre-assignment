@@ -1,4 +1,4 @@
-package com.movie.exception;
+package com.kalpesh.cinematheatre.exception;
 
 public class AlreadyRegisteredException extends RuntimeException {
 

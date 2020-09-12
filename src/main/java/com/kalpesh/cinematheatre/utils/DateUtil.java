@@ -1,4 +1,4 @@
-package com.movie.utils;
+package com.kalpesh.cinematheatre.utils;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

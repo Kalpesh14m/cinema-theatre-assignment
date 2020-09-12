@@ -17,4 +17,6 @@ public interface CinemaRepo extends JpaRepository<Cinema, Long>, CustomRepo {
 
 	Optional<Cinema> findByReleasedDateAndMovieName(LocalDate releasedDate, String movieName);
 
+	Optional<Cinema> findByMovieName(String movieName);
+
 }

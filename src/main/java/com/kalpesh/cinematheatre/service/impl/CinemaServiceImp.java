@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kalpesh.cinematheatre.constant.Constant;
+import com.kalpesh.cinematheatre.exception.AlreadyRegisteredException;
+import com.kalpesh.cinematheatre.exception.NotFoundException;
 import com.kalpesh.cinematheatre.model.Cinema;
 import com.kalpesh.cinematheatre.model.dto.CinemaDTO;
 import com.kalpesh.cinematheatre.model.dto.CinemaUpdateDTO;
 import com.kalpesh.cinematheatre.repo.CinemaRepo;
 import com.kalpesh.cinematheatre.service.CinemaService;
-import com.movie.exception.AlreadyRegisteredException;
-import com.movie.exception.NotFoundException;
 
 @Service
 public class CinemaServiceImp implements CinemaService {
@@ -25,7 +25,7 @@ public class CinemaServiceImp implements CinemaService {
 		Optional<Cinema> maybeMovieExists = cinemaRepo.findByReleasedDateAndMovieName(cinemaDetails.getReleasedDate(),
 				cinemaDetails.getMovieName());
 		if (maybeMovieExists.isPresent()) {
-			throw new AlreadyRegisteredException(Constant.CINEMA_ALREADY_REGISTER);
+			throw new AlreadyRegisteredException(Constant.CINEMA_DETAILS_ALREADY_REGISTER);
 		}
 		Cinema cinemaEntity = new Cinema();
 		BeanUtils.copyProperties(cinemaDetails, cinemaEntity);
@@ -35,7 +35,7 @@ public class CinemaServiceImp implements CinemaService {
 	public Cinema getCinemaById(Long cinemaId) {
 		Optional<Cinema> maybeCinema = cinemaRepo.findById(cinemaId);
 		if (!maybeCinema.isPresent()) {
-			throw new NotFoundException(Constant.CINEMA_NOT_FOUND);
+			throw new NotFoundException(Constant.CINEMA_DETAILS_NOT_FOUND);
 		}
 		return maybeCinema.get();
 	}
@@ -49,7 +49,7 @@ public class CinemaServiceImp implements CinemaService {
 	public void updateCinema(CinemaUpdateDTO request) {
 		Optional<Cinema> cinema = cinemaRepo.findById(request.getMovieId());
 		if (!cinema.isPresent()) {
-			throw new NotFoundException(Constant.CINEMA_NOT_FOUND);
+			throw new NotFoundException(Constant.CINEMA_DETAILS_NOT_FOUND);
 		}
 		cinema.get().setDirector(request.getDirector());
 		cinema.get().setMovieId(request.getMovieId());
@@ -63,7 +63,7 @@ public class CinemaServiceImp implements CinemaService {
 	public void deleteCinema(Long cinemaId) {
 		Optional<Cinema> maybehall = cinemaRepo.findById(cinemaId);
 		if (!maybehall.isPresent()) {
-			throw new NotFoundException(Constant.CINEMA_NOT_FOUND);
+			throw new NotFoundException(Constant.CINEMA_DETAILS_NOT_FOUND);
 		}
 		cinemaRepo.deleteById(maybehall.get().getMovieId());
 	}

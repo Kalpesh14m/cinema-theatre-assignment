@@ -39,7 +39,7 @@ public class HallController {
 			@ApiParam(value = "Taking CinemaHall DTO as a RequestBody", required = true) @RequestBody CinemaHallDTO request) {
 		hallService.registerHall(request);
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(new Response(Constant.HALL_REGISTER_SUCESSFULLY, Constant.OK_RESPONSE_CODE));
+				.body(new Response(Constant.HALL_DETAILS_REGISTER_SUCESSFULLY, Constant.OK_RESPONSE_CODE));
 	}
 
 	@ApiOperation(value = "Get Cinema hall with hall ID")
@@ -62,13 +62,13 @@ public class HallController {
 	public ResponseEntity<Response> updateHallInfo(@RequestBody CinemaHall request) {
 		hallService.updateHall(request);
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(new Response(Constant.HALL_UPDATED_SUCESSFULLY, Constant.OK_RESPONSE_CODE));
+				.body(new Response(Constant.HALL_DETAILS_UPDATED_SUCESSFULLY, Constant.OK_RESPONSE_CODE));
 	}
 
 	@DeleteMapping("/{hallId}")
 	public ResponseEntity<Response> deleteSource(@PathVariable Long hallId) {
 		hallService.deleteHall(hallId);
 		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(new Response(Constant.HALL_DELETED_SUCESSFULLY, Constant.OK_RESPONSE_CODE));
+				.body(new Response(Constant.HALL_DETAILS_DELETED_SUCESSFULLY, Constant.OK_RESPONSE_CODE));
 	}
 }
