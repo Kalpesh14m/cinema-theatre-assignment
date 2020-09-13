@@ -39,7 +39,7 @@ public class ScreenServiceImpl implements ScreenService {
 	public List<Screen> getScreenByHallId(Long hallId) {
 		Optional<CinemaHall> maybeHall = hallRepo.findById(hallId);
 		if (!maybeHall.isPresent()) {
-			throw new NotFoundException(Constant.SCREEN_DETAILS_NOT_fOUND);
+			throw new NotFoundException(Constant.SCREEN_DETAILS_NOT_FOUND);
 		}
 		return maybeHall.get().getScreen();
 	}
@@ -48,11 +48,20 @@ public class ScreenServiceImpl implements ScreenService {
 	public boolean updateScreen(Screen screenObj) {
 		Optional<Screen> maybeScreenPresent = screenRepo.findById(screenObj.getScreenId());
 		if (!maybeScreenPresent.isPresent()) {
-			throw new NotFoundException(Constant.SCREEN_DETAILS_NOT_fOUND);
+			throw new NotFoundException(Constant.SCREEN_DETAILS_NOT_FOUND);
 		}
 		screenObj.setHall(maybeScreenPresent.get().getHall());
 		screenRepo.save(screenObj);
 		return true;
+	}
+
+	@Override
+	public void deleteScreen(Long screenId) {
+		Optional<Screen> maybeScreen = screenRepo.findById(screenId);
+		if (!maybeScreen.isPresent()) {
+			throw new NotFoundException(Constant.SCREEN_DETAILS_NOT_FOUND);
+		}
+		hallRepo.deleteById(maybeScreen.get().getScreenId());
 	}
 
 }

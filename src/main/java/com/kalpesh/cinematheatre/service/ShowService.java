@@ -1,12 +1,18 @@
 package com.kalpesh.cinematheatre.service;
 
+import java.util.List;
+
+import com.kalpesh.cinematheatre.model.Show;
 import com.kalpesh.cinematheatre.model.dto.ShowDTO;
 
 public interface ShowService {
 
-	boolean addShow(ShowDTO request, Long hallId, Long screenId);
+	public boolean addShow(ShowDTO request, Long hallId, Long screenId);
 
-//	public List<Screen> getScreenByHallId(Long userId);
-//
-//	public boolean updateScreen(Screen address);
+	public boolean updateShow(ShowDTO showInfo, Long hallId, Long screenId);
+
+	public boolean deleteShow(Long hallId, Long screenId, Long showId);
+
+	public List<Show> getShows(Long hallId, Long screenId);
+
 }

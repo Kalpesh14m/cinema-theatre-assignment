@@ -33,7 +33,7 @@ public class Constant {
 	public static final String SCREEN_DETAILS_UPDATED = "Screen details updated succefully";
 	public static final String SCREEN_DETAILS_FAIL_TO_UPDATE = " Screen details failed to update";
 	public static final String SCREEN_DETAILS_FOUND = "Screen details found for given Hall";
-	public static final String SCREEN_DETAILS_NOT_fOUND = " not found Screen details for given Hall";
+	public static final String SCREEN_DETAILS_NOT_FOUND = " not found Screen details for given Hall";
 
 	public static final String CINEMA_DETAILS_FOUND = "Movie Found";
 	public static final String CINEMA_DETAILS_NOT_FOUND = "Movie not found!";
@@ -51,6 +51,6 @@ public class Constant {
 	public static final String SHOW_DETAILS_UPDATED = "Show details updated succefully";
 	public static final String SHOW_DETAILS_FAIL_TO_UPDATE = " Show details failed to update";
 	public static final String SHOW_DETAILS_FOUND = "Show details found for given Hall";
-	public static final String SHOW_DETAILS_NOT_fOUND = " not found Show details for given Screen";
+	public static final String SHOW_DETAILS_NOT_FOUND = " not found Show details for given Screen";
 
 }

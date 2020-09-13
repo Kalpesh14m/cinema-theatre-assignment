@@ -12,4 +12,6 @@ public interface ScreenService {
 	public List<Screen> getScreenByHallId(Long userId);
 
 	public boolean updateScreen(Screen address);
+
+	public void deleteScreen(Long screenId);
 }

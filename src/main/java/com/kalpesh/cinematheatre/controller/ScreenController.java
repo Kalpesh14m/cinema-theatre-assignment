@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,4 +53,10 @@ public class ScreenController {
 				.body(new Response(Constant.SCREEN_DETAILS_FAIL_TO_UPDATE, Constant.BAD_REQUEST_RESPONSE_CODE));
 	}
 
+	@DeleteMapping("/{screenId}")
+	public ResponseEntity<Response> deleteSource(@PathVariable Long screenId) {
+		screenService.deleteScreen(screenId);
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(new Response(Constant.SCREEN_DETAILS_ADDED, Constant.OK_RESPONSE_CODE));
+	}
 }
