@@ -1,5 +1,7 @@
 package com.kalpesh.cinematheatre.repo;
 
+import java.util.UUID;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +12,6 @@ import com.kalpesh.cinematheatre.repo.custom.CustomRepo;
 
 @Repository
 @Transactional
-public interface BookingRepo extends JpaRepository<Booking, Long>, CustomRepo {
+public interface BookingRepo extends JpaRepository<Booking, UUID>, CustomRepo {
 
 }

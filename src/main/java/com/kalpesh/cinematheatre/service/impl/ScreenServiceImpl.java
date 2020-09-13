@@ -28,6 +28,9 @@ public class ScreenServiceImpl implements ScreenService {
 	@Override
 	public boolean addScreen(ScreenDTO screen, Long hallId) {
 		Optional<CinemaHall> maybeHall = hallRepo.findById(hallId);
+		if (!maybeHall.isPresent()) {
+			throw new NotFoundException(Constant.HALL_DETAILS_NOT_FOUND);
+		}
 		Screen sc = new Screen();
 		BeanUtils.copyProperties(screen, sc);
 		sc.setHall(maybeHall.get());
@@ -39,7 +42,7 @@ public class ScreenServiceImpl implements ScreenService {
 	public List<Screen> getScreenByHallId(Long hallId) {
 		Optional<CinemaHall> maybeHall = hallRepo.findById(hallId);
 		if (!maybeHall.isPresent()) {
-			throw new NotFoundException(Constant.SCREEN_DETAILS_NOT_FOUND);
+			throw new NotFoundException(Constant.HALL_DETAILS_NOT_FOUND);
 		}
 		return maybeHall.get().getScreen();
 	}

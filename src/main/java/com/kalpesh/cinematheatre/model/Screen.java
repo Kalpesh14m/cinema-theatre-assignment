@@ -33,13 +33,11 @@ public class Screen {
 	@Column(name = "bookings", nullable = false)
 	private Long bookingCounter;
 
-	// Many screens can be inside one hall M->O
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinColumn(name = "hall_id")
 	@JsonIgnore
 	private CinemaHall hall;
 
-	// On one screen many shows can be present O->M
 	@OneToMany(mappedBy = "screen", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
 			CascadeType.REFRESH }, fetch = FetchType.LAZY)
 	private List<Show> show;

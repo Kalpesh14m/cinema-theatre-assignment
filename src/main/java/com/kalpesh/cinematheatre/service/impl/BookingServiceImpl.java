@@ -1,5 +1,6 @@
 package com.kalpesh.cinematheatre.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
@@ -7,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kalpesh.cinematheatre.constant.Constant;
+import com.kalpesh.cinematheatre.exception.AlreadyRegisteredException;
 import com.kalpesh.cinematheatre.exception.NotFoundException;
 import com.kalpesh.cinematheatre.model.Booking;
+import com.kalpesh.cinematheatre.model.Screen;
 import com.kalpesh.cinematheatre.model.Show;
 import com.kalpesh.cinematheatre.model.dto.BookingDTO;
 import com.kalpesh.cinematheatre.repo.BookingRepo;
@@ -24,12 +27,21 @@ public class BookingServiceImpl implements BookingService {
 	@Autowired
 	private BookingRepo bookingRepo;
 
+	@Autowired
+	private ScreenServiceImpl screens;
+
 	@Override
 	public boolean bookShow(BookingDTO request, Long showId) {
 		Optional<Show> maybeShow = getShowById(showId);
 		if (!maybeShow.isPresent()) {
 			throw new NotFoundException(Constant.SHOW_DETAILS_NOT_FOUND);
 		}
+		Screen maybeScreen = maybeShow.get().getScreen();
+		if (maybeScreen.getBookingCounter() >= maybeScreen.getsCapacity()) {
+			throw new AlreadyRegisteredException(Constant.SHOW_FULL);
+		}
+		maybeScreen.setBookingCounter(maybeScreen.getBookingCounter() + 1);
+		screens.updateScreen(maybeScreen);
 		Booking book = new Booking();
 		BeanUtils.copyProperties(request, book);
 		book.setShow(maybeShow.get());
@@ -100,6 +112,12 @@ public class BookingServiceImpl implements BookingService {
 
 	private Optional<Show> getShowById(Long showId) {
 		return showRepo.findById(showId);
+	}
+
+	@Override
+	public List<Booking> getBookings(String bookingUniqueId, String name, String email, Long mobileNumber) {
+		System.out.println("Booking Id: " + bookingUniqueId);
+		return bookingRepo.getBooking(bookingUniqueId, name, email, mobileNumber);
 	}
 
 }

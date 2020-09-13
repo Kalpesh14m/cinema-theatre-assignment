@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.util.StringUtils;
 
+import com.kalpesh.cinematheatre.model.Booking;
 import com.kalpesh.cinematheatre.model.CinemaHall;
 import com.kalpesh.cinematheatre.model.Show;
 
@@ -37,5 +38,23 @@ public class CustomRepoImpl implements CustomRepo {
 			sql += String.format("and s.showDate <= '%tF' ", endDate);
 		}
 		return entityManager.createQuery(sql, Show.class).getResultList();
+	}
+
+	@Override
+	public List<Booking> getBooking(String bookingUniqueId, String name, String email, Long mobileNumber) {
+		String sql = "FROM Booking b where 1=1 ";
+		if (!StringUtils.isEmpty(bookingUniqueId)) {
+			sql += String.format("and b.bookingUniqueId = '%s' ", bookingUniqueId);
+		}
+		if (!StringUtils.isEmpty(name)) {
+			sql += String.format("and b.name = '%s' ", name);
+		}
+		if (!StringUtils.isEmpty(email)) {
+			sql += String.format("and b.emailId = '%s' ", email);
+		}
+		if (!StringUtils.isEmpty(mobileNumber)) {
+			sql += String.format("and b.mobileNumber = '%s' ", mobileNumber.toString());
+		}
+		return entityManager.createQuery(sql, Booking.class).getResultList();
 	}
 }

@@ -1,16 +1,13 @@
 package com.playground;
 
-import java.time.LocalTime;
+import java.util.UUID;
 
 public class Plaground {
-	public static void getCurrentTimeUsingCalendar() {
-
-		String time = "08:20:45";
-		LocalTime today = LocalTime.parse(time);
-		System.out.println("3 " + today);
-	}
-
 	public static void main(String[] args) {
-		getCurrentTimeUsingCalendar();
+
+		// Creating a random UUID (Universally unique identifier).
+		String uuid = UUID.randomUUID().toString();
+
+		System.out.println("Random UUID String = " + uuid);
 	}
 }

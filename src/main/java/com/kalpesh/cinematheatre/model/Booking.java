@@ -1,5 +1,7 @@
 package com.kalpesh.cinematheatre.model;
 
+import java.util.UUID;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +20,9 @@ public class Booking {
 	@Column(name = "booking_id")
 	private Long bookingId;
 
+	@Column(name = "booking_unique_id", updatable = false, nullable = false)
+	private String bookingUniqueId;
+
 	@Column(name = "name", nullable = false)
 	private String name;
 
@@ -32,6 +37,7 @@ public class Booking {
 	private Show show;
 
 	public Booking() {
+		bookingUniqueId = UUID.randomUUID().toString();
 	}
 
 	public Booking(Long bookingId, String name, Long mobileNumber, String emailId) {
@@ -40,6 +46,7 @@ public class Booking {
 		this.name = name;
 		this.mobileNumber = mobileNumber;
 		this.emailId = emailId;
+		this.bookingUniqueId = UUID.randomUUID().toString();
 	}
 
 	public Long getBookingId() {

@@ -14,8 +14,6 @@ import com.kalpesh.cinematheatre.repo.custom.CustomRepo;
 @Transactional
 public interface HallRepo extends JpaRepository<CinemaHall, Long>, CustomRepo {
 
-//	public Optional<CinemaHall> findById(Long userId);
-
 	public Optional<CinemaHall> findByChCityAndChName(String chCity, String chName);
 
 }

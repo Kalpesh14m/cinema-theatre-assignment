@@ -34,6 +34,7 @@ public class Constant {
 	public static final String SCREEN_DETAILS_FAIL_TO_UPDATE = " Screen details failed to update";
 	public static final String SCREEN_DETAILS_FOUND = "Screen details found for given Hall";
 	public static final String SCREEN_DETAILS_NOT_FOUND = " not found Screen details for given Hall";
+	public static final String SHOW_FULL = " Show already full";
 
 	public static final String CINEMA_DETAILS_FOUND = "Movie Found";
 	public static final String CINEMA_DETAILS_NOT_FOUND = "Movie not found!";
