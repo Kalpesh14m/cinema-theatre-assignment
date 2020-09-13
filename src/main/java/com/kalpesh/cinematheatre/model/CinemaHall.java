@@ -48,13 +48,13 @@ public class CinemaHall {
 	public CinemaHall() {
 	}
 
-	public CinemaHall(Long chId, String chName, String chCity, String chState, String chCountry) {
-		this.chId = chId;
-		this.chName = chName;
-		this.chCity = chCity;
-		this.chState = chState;
-		this.chCountry = chCountry;
-	}
+//	public CinemaHall(Long chId, String chName, String chCity, String chState, String chCountry) {
+//		this.chId = chId;
+//		this.chName = chName;
+//		this.chCity = chCity;
+//		this.chState = chState;
+//		this.chCountry = chCountry;
+//	}
 
 	public Long getChId() {
 		return chId;

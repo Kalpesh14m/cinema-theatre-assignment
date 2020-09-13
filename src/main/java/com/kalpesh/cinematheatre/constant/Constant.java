@@ -53,4 +53,12 @@ public class Constant {
 	public static final String SHOW_DETAILS_FOUND = "Show details found for given Hall";
 	public static final String SHOW_DETAILS_NOT_FOUND = " not found Show details for given Screen";
 
+	public static final String BOOKING_DETAILS_ADDED = "Booking details added succefully";
+	public static final String BOOKING_DETAILS_FAIL_TO_ADD = " Booking details failed to add";
+	public static final String BOOKING_DETAILS_DELETED = "Booking details deleted succefully";
+	public static final String BOOKING_DETAILS_FAIL_TO_DELETE = " Booking details failed to delete";
+	public static final String BOOKING_DETAILS_UPDATED = "Booking details updated succefully";
+	public static final String BOOKING_DETAILS_FAIL_TO_UPDATE = " Booking details failed to update";
+	public static final String BOOKING_DETAILS_FOUND = "Booking details found for given Hall";
+	public static final String BOOKING_DETAILS_NOT_FOUND = " not found Booking details for given Show";
 }

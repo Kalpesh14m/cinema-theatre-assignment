@@ -49,14 +49,14 @@ public class Screen {
 		this.bookingCounter = (long) 0;
 	}
 
-	public Screen(Long screenId, boolean sBooked, Long sCapacity, Long bookingCounter, CinemaHall hall) {
-		super();
-		this.screenId = screenId;
-		this.sBooked = sBooked;
-		this.sCapacity = sCapacity;
-		this.bookingCounter = bookingCounter;
-		this.hall = hall;
-	}
+//	public Screen(Long screenId, boolean sBooked, Long sCapacity, Long bookingCounter, CinemaHall hall) {
+//		super();
+//		this.screenId = screenId;
+//		this.sBooked = sBooked;
+//		this.sCapacity = sCapacity;
+//		this.bookingCounter = bookingCounter;
+//		this.hall = hall;
+//	}
 
 	public Long getScreenId() {
 		return screenId;
