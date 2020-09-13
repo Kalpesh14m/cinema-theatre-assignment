@@ -1,5 +1,6 @@
 package com.kalpesh.cinematheatre.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.kalpesh.cinematheatre.model.Show;
@@ -14,5 +15,9 @@ public interface ShowService {
 	public boolean deleteShow(Long hallId, Long screenId, Long showId);
 
 	public List<Show> getShows(Long hallId, Long screenId);
+
+	public List<Show> getFilteredShows(LocalDate startDate, LocalDate endDate);
+
+	public List<Show> getFilteredShows();
 
 }

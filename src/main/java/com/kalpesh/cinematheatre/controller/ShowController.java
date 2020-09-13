@@ -1,8 +1,13 @@
 package com.kalpesh.cinematheatre.controller;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kalpesh.cinematheatre.constant.Constant;
@@ -42,7 +48,25 @@ public class ShowController {
 	@GetMapping("/{hallId}/{screenId}")
 	public List<Show> getShows(@PathVariable Long hallId, @PathVariable Long screenId) {
 		return showService.getShows(hallId, screenId);
+	}
 
+	@GetMapping("/")
+	public List<Show> getFilteredShows(
+			@RequestParam(name = "Start Date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+			@RequestParam(name = "End Date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
+		LocalDate myStartDate = LocalDate.now();
+		LocalDate myEndDate = LocalDate.now();
+		if (startDate != null) {
+			myStartDate = LocalDate.parse(startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+					.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+		}
+		if (endDate != null) {
+			myEndDate = LocalDate.parse((endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
+					.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+		} else if (startDate == null && endDate == null) {
+			return showService.getFilteredShows();
+		}
+		return showService.getFilteredShows(myStartDate, myEndDate);
 	}
 
 	@PutMapping("/{hallId}/{screenId}")

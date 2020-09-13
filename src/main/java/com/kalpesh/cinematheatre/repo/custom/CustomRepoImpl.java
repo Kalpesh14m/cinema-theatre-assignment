@@ -1,5 +1,6 @@
 package com.kalpesh.cinematheatre.repo.custom;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.util.StringUtils;
 
 import com.kalpesh.cinematheatre.model.CinemaHall;
+import com.kalpesh.cinematheatre.model.Show;
 
 public class CustomRepoImpl implements CustomRepo {
 	@PersistenceContext
@@ -23,5 +25,17 @@ public class CustomRepoImpl implements CustomRepo {
 			sql += String.format("and h.chCity = '%s' ", chCity);
 		}
 		return entityManager.createQuery(sql, CinemaHall.class).getResultList();
+	}
+
+	@Override
+	public List<Show> getFilteredShows(LocalDate startDate, LocalDate endDate) {
+		String sql = "FROM Show s where 1=1 ";
+		if (!StringUtils.isEmpty(startDate)) {
+			sql += String.format("and s.showDate >= '%tF' ", startDate);
+		}
+		if (!StringUtils.isEmpty(endDate)) {
+			sql += String.format("and s.showDate <= '%tF' ", endDate);
+		}
+		return entityManager.createQuery(sql, Show.class).getResultList();
 	}
 }

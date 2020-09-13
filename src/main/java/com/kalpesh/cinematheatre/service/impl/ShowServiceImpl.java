@@ -1,5 +1,6 @@
 package com.kalpesh.cinematheatre.service.impl;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -118,6 +119,16 @@ public class ShowServiceImpl implements ShowService {
 		return maybeHall.get().getScreen().get(screenId.intValue() - 1).getShow();
 	}
 
+	@Override
+	public List<Show> getFilteredShows(LocalDate startDate, LocalDate endDate) {
+		return showRepo.getFilteredShows(startDate, endDate);
+	}
+
+	@Override
+	public List<Show> getFilteredShows() {
+		return showRepo.findAll();
+	}
+
 	private Optional<Screen> getScreenById(Long screenId) {
 		return screenRepo.findById(screenId);
 	}
@@ -137,4 +148,5 @@ public class ShowServiceImpl implements ShowService {
 	private Optional<Show> getShowById(Long showId) {
 		return showRepo.findById(showId);
 	}
+
 }
