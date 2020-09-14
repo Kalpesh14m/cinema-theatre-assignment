@@ -23,7 +23,6 @@ import com.kalpesh.cinematheatre.service.HallService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping(value = "/hall")
@@ -35,8 +34,7 @@ public class HallController {
 
 	@ApiOperation(value = "Register new Cinema Hall in database")
 	@PostMapping(value = "/")
-	public ResponseEntity<Response> register(
-			@ApiParam(value = "Taking CinemaHall DTO as a RequestBody") @RequestBody CinemaHallDTO request) {
+	public ResponseEntity<Response> register(@RequestBody CinemaHallDTO request) {
 		hallService.registerHall(request);
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new Response(Constant.HALL_DETAILS_REGISTER_SUCESSFULLY, Constant.OK_RESPONSE_CODE));
@@ -44,8 +42,7 @@ public class HallController {
 
 	@ApiOperation(value = "Get all registered Cinema halls")
 	@GetMapping("/")
-	public List<CinemaHall> halls(
-			@ApiParam(value = "Taking Hall Name or Hall City for search operation") @RequestParam(required = false, name = "Hall Name") String chName,
+	public List<CinemaHall> halls(@RequestParam(required = false, name = "Hall Name") String chName,
 			@RequestParam(required = false, name = "Hall City") String chCity,
 			@RequestParam(required = false) Long hallId) {
 		return hallService.getHalls(chName, chCity, hallId);

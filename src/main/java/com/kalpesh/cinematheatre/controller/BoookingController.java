@@ -21,9 +21,11 @@ import com.kalpesh.cinematheatre.model.dto.BookingDTO;
 import com.kalpesh.cinematheatre.response.Response;
 import com.kalpesh.cinematheatre.service.BookingService;
 
+import io.swagger.annotations.Api;
+
 @RestController
 @RequestMapping(value = "/booking")
-
+@Api(value = "Booking Controller")
 public class BoookingController {
 
 	@Autowired

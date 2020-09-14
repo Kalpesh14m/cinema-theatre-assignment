@@ -4,8 +4,6 @@ spring:
     username: ${emailId}
     password: ${emailPass}
   datasource:
-    url: jdbc:mysql://localhost:3306/${dbName}?useSSL=false
-    username: ${dbUser}
-    password: ${dbPass}
-server:
-  port: ${port}
+    url: jdbc:mysql://${RDS_HOSTNAME}:${RDS_PORT}/${RDS_DB_NAME}?useSSL=false
+    username: ${RDS_USERNAME}
+    password: ${RDS_PASSWORD}

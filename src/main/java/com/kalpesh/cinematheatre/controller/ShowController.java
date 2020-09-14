@@ -23,9 +23,11 @@ import com.kalpesh.cinematheatre.model.dto.ShowDTO;
 import com.kalpesh.cinematheatre.response.Response;
 import com.kalpesh.cinematheatre.service.ShowService;
 
+import io.swagger.annotations.Api;
+
 @RestController
 @RequestMapping(value = "/show")
-
+@Api(value = "Show Controller")
 public class ShowController {
 
 	@Autowired

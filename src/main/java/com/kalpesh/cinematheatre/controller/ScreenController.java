@@ -20,9 +20,11 @@ import com.kalpesh.cinematheatre.model.dto.ScreenDTO;
 import com.kalpesh.cinematheatre.response.Response;
 import com.kalpesh.cinematheatre.service.ScreenService;
 
+import io.swagger.annotations.Api;
+
 @RestController
 @RequestMapping(value = "/screen")
-
+@Api(value = "Screen Controller")
 public class ScreenController {
 
 	@Autowired
