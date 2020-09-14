@@ -7,8 +7,13 @@ import com.kalpesh.cinematheatre.model.dto.BookingDTO;
 
 public interface BookingService {
 
-	public boolean bookShow(BookingDTO request, Long showId);
+	public String bookShow(BookingDTO request, Long showId);
 
 	public List<Booking> getBookings(String bookingUniqueId, String name, String email, Long mobileNumber);
+
+	public boolean updateBooking(BookingDTO bookingInfo, String bookingId, String emailId, Long mobileNumber,
+			String userName);
+
+	public boolean cancleBooking(String bookingId);
 
 }

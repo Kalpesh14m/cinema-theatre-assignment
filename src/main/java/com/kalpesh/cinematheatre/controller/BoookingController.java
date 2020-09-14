@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,12 +31,9 @@ public class BoookingController {
 
 	@PostMapping(value = "/{showId}", headers = "Accept=application/json")
 	public ResponseEntity<Response> addShow(@RequestBody BookingDTO request, @PathVariable Long showId) {
-		if (bookingService.bookShow(request, showId)) {
-			return ResponseEntity.status(HttpStatus.OK)
-					.body(new Response(Constant.BOOKING_DETAILS_ADDED, Constant.OK_RESPONSE_CODE));
-		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-				.body(new Response(Constant.BOOKING_DETAILS_FAIL_TO_ADD, Constant.BAD_REQUEST_RESPONSE_CODE));
+		String msg = bookingService.bookShow(request, showId);
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(new Response(Constant.BOOKING_DETAILS_ADDED + msg, Constant.OK_RESPONSE_CODE));
 	}
 
 	@GetMapping("/")
@@ -45,26 +44,26 @@ public class BoookingController {
 		return bookingService.getBookings(bookingUniqueId, name, email, mobileNumber);
 	}
 
-//
-//	@PutMapping("/{hallId}/{screenId}")
-//	public ResponseEntity<Response> updateShowInfo(@RequestBody ShowDTO showInfo, @PathVariable Long hallId,
-//			@PathVariable Long screenId) {
-//		if (showService.updateShow(showInfo, hallId, screenId)) {
-//			return ResponseEntity.status(HttpStatus.OK)
-//					.body(new Response(Constant.SHOW_DETAILS_UPDATED, Constant.OK_RESPONSE_CODE));
-//		}
-//		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//				.body(new Response(Constant.SHOW_DETAILS_FAIL_TO_UPDATE, Constant.BAD_REQUEST_RESPONSE_CODE));
-//	}
-//
-//	@DeleteMapping("/{hallId}/{screenId}/{showId}")
-//	public ResponseEntity<Response> deleteShow(@PathVariable Long hallId, @PathVariable Long screenId,
-//			@PathVariable Long showId) {
-//		if (showService.deleteShow(hallId, screenId, showId)) {
-//			return ResponseEntity.status(HttpStatus.OK)
-//					.body(new Response(Constant.SHOW_DETAILS_DELETED, Constant.OK_RESPONSE_CODE));
-//		}
-//		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//				.body(new Response(Constant.SHOW_DETAILS_FAIL_TO_DELETE, Constant.BAD_REQUEST_RESPONSE_CODE));
-//	}
+	@PutMapping("/")
+	public ResponseEntity<Response> updateBookingInfo(@RequestBody BookingDTO bookingInfo,
+			@RequestParam(name = "Booking Id") String bookingId, @RequestParam(name = "Email Id") String emailId,
+			@RequestParam(name = "Mobile Number") Long mobileNumber,
+			@RequestParam(name = "User Name") String userName) {
+		if (bookingService.updateBooking(bookingInfo, bookingId, emailId, mobileNumber, userName)) {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(new Response(Constant.BOOKING_DETAILS_UPDATED, Constant.OK_RESPONSE_CODE));
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.body(new Response(Constant.BOOKING_DETAILS_FAIL_TO_UPDATE, Constant.BAD_REQUEST_RESPONSE_CODE));
+	}
+
+	@DeleteMapping("/")
+	public ResponseEntity<Response> cancleBooking(@RequestParam String bookingId) {
+		if (bookingService.cancleBooking(bookingId)) {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(new Response(Constant.BOOKING_DETAILS_DELETED, Constant.OK_RESPONSE_CODE));
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.body(new Response(Constant.BOOKING_DETAILS_FAIL_TO_DELETE, Constant.BAD_REQUEST_RESPONSE_CODE));
+	}
 }

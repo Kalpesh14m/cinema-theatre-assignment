@@ -89,4 +89,12 @@ public class Booking {
 		this.show = show;
 	}
 
+	public String getBookingUniqueId() {
+		return bookingUniqueId;
+	}
+
+	public void setBookingUniqueId(String bookingUniqueId) {
+		this.bookingUniqueId = bookingUniqueId;
+	}
+
 }
