@@ -2,6 +2,8 @@
 
 ## Assignment:
 
+### ![To test API in swagger](http://movietheatremanagement-env.eba-eu5tvrpd.ap-south-1.elasticbeanstalk.com/swagger-ui.html#/)
+
 ### application.yml:
 ```
 profiles: dev
