@@ -9,6 +9,12 @@ dbName: Your MySQL database Name
 dbUser: Your MySQL server User Name
 dbPass: Your MySQL server User Pass
 port: Port number on which you want to run your server
+emailId: your email ID
+emailPass: your Email Pass(if you are getting error like authontication fail so need to chage setting in email
+  - Manage Your Google Account
+  - Security
+  - 2-Step verification -> Off
+  - Less secure app access -> On
 ```
 
 ## Libraries used
@@ -20,6 +26,7 @@ port: Port number on which you want to run your server
 - Swagger
 - MySQL
 - ControllerAdvice
+- JMS
 
 ## Git 2.10.0
 
