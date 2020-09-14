@@ -11,12 +11,14 @@ import com.kalpesh.cinematheatre.constant.Constant;
 import com.kalpesh.cinematheatre.exception.AlreadyRegisteredException;
 import com.kalpesh.cinematheatre.exception.NotFoundException;
 import com.kalpesh.cinematheatre.model.Booking;
+import com.kalpesh.cinematheatre.model.Mail;
 import com.kalpesh.cinematheatre.model.Screen;
 import com.kalpesh.cinematheatre.model.Show;
 import com.kalpesh.cinematheatre.model.dto.BookingDTO;
 import com.kalpesh.cinematheatre.repo.BookingRepo;
 import com.kalpesh.cinematheatre.repo.ShowRepo;
 import com.kalpesh.cinematheatre.service.BookingService;
+import com.kalpesh.cinematheatre.utils.EmailService;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -29,6 +31,9 @@ public class BookingServiceImpl implements BookingService {
 
 	@Autowired
 	private ScreenServiceImpl screens;
+
+	@Autowired
+	private EmailService mail;
 
 	@Override
 	public String bookShow(BookingDTO request, Long showId) {
@@ -46,7 +51,19 @@ public class BookingServiceImpl implements BookingService {
 		BeanUtils.copyProperties(request, book);
 		book.setShow(maybeShow.get());
 		bookingRepo.save(book);
+		sendMail(request.getEmailId(), request.getName(), book.getBookingUniqueId(),
+				maybeShow.get().getMovie().getMovieName());
 		return book.getBookingUniqueId();
+	}
+
+	private void sendMail(String email, String name, String bookingId, String movieName) {
+		Mail m = new Mail();
+		String msg = "Welcome " + name + "\nYour booking is confirmed!\n" + "Booking ID " + bookingId;
+		m.setTo(email);
+		String subject = "Your booking is confirmed for " + movieName;
+		m.setSubject(subject);
+		m.setContent(msg);
+		mail.sendSimpleMessage(m);
 	}
 
 	private Optional<Show> getShowById(Long showId) {

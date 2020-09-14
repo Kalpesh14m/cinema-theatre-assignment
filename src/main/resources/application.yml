@@ -1,5 +1,8 @@
 spring:
   profiles: dev
+  mail:
+    username: ${emailId}
+    password: ${emailPass}
   datasource:
     url: jdbc:mysql://localhost:3306/${dbName}?useSSL=false
     username: ${dbUser}
