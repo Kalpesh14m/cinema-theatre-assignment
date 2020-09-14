@@ -28,14 +28,11 @@ public class ScreenController {
 	@Autowired
 	private ScreenService screenService;
 
-	@PostMapping(value = "/{hallId}", headers = "Accept=application/json")
+	@PostMapping(value = "/{hallId}")
 	public ResponseEntity<Response> addScreen(@RequestBody ScreenDTO screen, @PathVariable Long hallId) {
-		if (screenService.addScreen(screen, hallId)) {
-			return ResponseEntity.status(HttpStatus.OK)
-					.body(new Response(Constant.SCREEN_DETAILS_ADDED, Constant.OK_RESPONSE_CODE));
-		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-				.body(new Response(Constant.SCREEN_DETAILS_FAIL_TO_ADD, Constant.BAD_REQUEST_RESPONSE_CODE));
+		screenService.addScreen(screen, hallId);
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(new Response(Constant.SCREEN_DETAILS_ADDED, Constant.OK_RESPONSE_CODE));
 	}
 
 	@GetMapping("/{hallId}")
@@ -45,18 +42,15 @@ public class ScreenController {
 
 	@PutMapping("/")
 	public ResponseEntity<Response> updateScreenInfo(@RequestBody Screen screenInfo) {
-		if (screenService.updateScreen(screenInfo)) {
-			return ResponseEntity.status(HttpStatus.OK)
-					.body(new Response(Constant.SCREEN_DETAILS_UPDATED, Constant.OK_RESPONSE_CODE));
-		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-				.body(new Response(Constant.SCREEN_DETAILS_FAIL_TO_UPDATE, Constant.BAD_REQUEST_RESPONSE_CODE));
+		screenService.updateScreen(screenInfo);
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(new Response(Constant.SCREEN_DETAILS_UPDATED, Constant.OK_RESPONSE_CODE));
 	}
 
 	@DeleteMapping("/{screenId}")
 	public ResponseEntity<Response> deleteSource(@PathVariable Long screenId) {
 		screenService.deleteScreen(screenId);
 		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(new Response(Constant.SCREEN_DETAILS_ADDED, Constant.OK_RESPONSE_CODE));
+				.body(new Response(Constant.SCREEN_DETAILS_DELETED, Constant.OK_RESPONSE_CODE));
 	}
 }

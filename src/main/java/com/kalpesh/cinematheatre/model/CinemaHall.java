@@ -33,8 +33,7 @@ public class CinemaHall {
 	@Column(name = "ch_country", nullable = false)
 	private String chCountry;
 
-	@OneToMany(mappedBy = "hall", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
-			CascadeType.REFRESH }, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "hall", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Screen> screen;
 
 	public List<Screen> getScreen() {
@@ -48,14 +47,6 @@ public class CinemaHall {
 	public CinemaHall() {
 	}
 
-//	public CinemaHall(Long chId, String chName, String chCity, String chState, String chCountry) {
-//		this.chId = chId;
-//		this.chName = chName;
-//		this.chCity = chCity;
-//		this.chState = chState;
-//		this.chCountry = chCountry;
-//	}
-
 	public Long getChId() {
 		return chId;
 	}
@@ -65,34 +56,34 @@ public class CinemaHall {
 	}
 
 	public String getChName() {
-		return chName;
+		return chName.toLowerCase();
 	}
 
 	public void setChName(String chName) {
-		this.chName = chName;
+		this.chName = chName.toLowerCase();
 	}
 
 	public String getChCity() {
-		return chCity;
+		return chCity.toLowerCase();
 	}
 
 	public void setChCity(String chCity) {
-		this.chCity = chCity;
+		this.chCity = chCity.toLowerCase();
 	}
 
 	public String getChState() {
-		return chState;
+		return chState.toLowerCase();
 	}
 
 	public void setChState(String chState) {
-		this.chState = chState;
+		this.chState = chState.toLowerCase();
 	}
 
 	public String getChCountry() {
-		return chCountry;
+		return chCountry.toLowerCase();
 	}
 
 	public void setChCountry(String chCountry) {
-		this.chCountry = chCountry;
+		this.chCountry = chCountry.toLowerCase();
 	}
 }

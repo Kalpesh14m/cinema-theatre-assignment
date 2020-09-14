@@ -1,7 +1,7 @@
 package com.kalpesh.cinematheatre.service.impl;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +39,7 @@ public class ShowServiceImpl implements ShowService {
 	private CinemaRepo cinemaRepo;
 
 	@Override
-	public boolean addShow(ShowDTO request, Long hallId, Long screenId) {
+	public void addShow(ShowDTO request, Long hallId, Long screenId) {
 
 		Optional<Screen> maybeScreen = getScreenById(screenId);
 		Optional<Cinema> maybeMovie = getMovieByName(request.getMovieName());
@@ -61,11 +61,10 @@ public class ShowServiceImpl implements ShowService {
 		sc.setScreen(maybeScreen.get());
 		sc.setShowTime(showTime);
 		showRepo.save(sc);
-		return true;
 	}
 
 	@Override
-	public boolean updateShow(ShowDTO request, Long hallId, Long screenId) {
+	public void updateShow(ShowDTO request, Long hallId, Long screenId) {
 
 		Optional<Screen> maybeScreen = getScreenById(screenId);
 		Optional<Cinema> maybeMovie = getMovieByName(request.getMovieName());
@@ -87,11 +86,10 @@ public class ShowServiceImpl implements ShowService {
 		sc.setScreen(maybeScreen.get());
 		sc.setShowTime(showTime);
 		showRepo.save(sc);
-		return true;
 	}
 
 	@Override
-	public boolean deleteShow(Long hallId, Long screenId, Long showId) {
+	public void deleteShow(Long hallId, Long screenId, Long showId) {
 		Optional<Show> maybeShow = getShowById(showId);
 
 		if (!getCinemaHallById(hallId).isPresent()) {
@@ -101,9 +99,7 @@ public class ShowServiceImpl implements ShowService {
 		} else if (!maybeShow.isPresent()) {
 			throw new NotFoundException(Constant.SHOW_DETAILS_NOT_FOUND);
 		}
-
 		showRepo.delete(maybeShow.get());
-		return true;
 	}
 
 	@Override
@@ -120,13 +116,8 @@ public class ShowServiceImpl implements ShowService {
 	}
 
 	@Override
-	public List<Show> getFilteredShows(LocalDate startDate, LocalDate endDate) {
+	public List<Show> getFilteredShows(Date startDate, Date endDate) {
 		return showRepo.getFilteredShows(startDate, endDate);
-	}
-
-	@Override
-	public List<Show> getFilteredShows() {
-		return showRepo.findAll();
 	}
 
 	private Optional<Screen> getScreenById(Long screenId) {

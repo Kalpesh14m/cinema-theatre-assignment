@@ -33,28 +33,18 @@ public class Screen {
 	@Column(name = "bookings", nullable = false)
 	private Long bookingCounter;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "hall_id")
 	@JsonIgnore
 	private CinemaHall hall;
 
-	@OneToMany(mappedBy = "screen", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
-			CascadeType.REFRESH }, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "screen", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Show> show;
 
 	public Screen() {
 		this.sBooked = false;
 		this.bookingCounter = (long) 0;
 	}
-
-//	public Screen(Long screenId, boolean sBooked, Long sCapacity, Long bookingCounter, CinemaHall hall) {
-//		super();
-//		this.screenId = screenId;
-//		this.sBooked = sBooked;
-//		this.sCapacity = sCapacity;
-//		this.bookingCounter = bookingCounter;
-//		this.hall = hall;
-//	}
 
 	public Long getScreenId() {
 		return screenId;

@@ -9,9 +9,7 @@ public interface HallService {
 
 	public void registerHall(CinemaHallDTO request);
 
-	public List<CinemaHall> getHalls(String chName, String chCity);
-
-	public CinemaHall getHallById(Long hallId);
+	public List<CinemaHall> getHalls(String chName, String chCity, Long hallId);
 
 	public void updateHall(CinemaHall request);
 

@@ -43,6 +43,7 @@ public class BookingServiceImpl implements BookingService {
 		}
 		Screen maybeScreen = maybeShow.get().getScreen();
 		if (maybeScreen.getBookingCounter() >= maybeScreen.getsCapacity()) {
+			maybeShow.get().getScreen().setsBooked(true);
 			throw new AlreadyRegisteredException(Constant.SHOW_FULL);
 		}
 		maybeScreen.setBookingCounter(maybeScreen.getBookingCounter() + 1);
@@ -50,17 +51,17 @@ public class BookingServiceImpl implements BookingService {
 		Booking book = new Booking();
 		BeanUtils.copyProperties(request, book);
 		book.setShow(maybeShow.get());
+		String msg = "Welcome " + request.getName() + "\nYour booking is confirmed!\n" + "Booking ID "
+				+ book.getBookingUniqueId();
+		String subject = "Your booking is confirmed for " + maybeShow.get().getMovie().getMovieName();
+		sendMail(request.getEmailId(), msg, subject);
 		bookingRepo.save(book);
-		sendMail(request.getEmailId(), request.getName(), book.getBookingUniqueId(),
-				maybeShow.get().getMovie().getMovieName());
 		return book.getBookingUniqueId();
 	}
 
-	private void sendMail(String email, String name, String bookingId, String movieName) {
+	private void sendMail(String email, String msg, String subject) {
 		Mail m = new Mail();
-		String msg = "Welcome " + name + "\nYour booking is confirmed!\n" + "Booking ID " + bookingId;
 		m.setTo(email);
-		String subject = "Your booking is confirmed for " + movieName;
 		m.setSubject(subject);
 		m.setContent(msg);
 		mail.sendSimpleMessage(m);
@@ -76,12 +77,19 @@ public class BookingServiceImpl implements BookingService {
 		return bookingRepo.getBooking(bookingUniqueId, name, email, mobileNumber);
 	}
 
-	// Need to work
 	@Override
-	public boolean updateBooking(BookingDTO bookingInfo, String bookingId, String emailId, Long mobileNumber,
-			String userName) {
-
-		return false;
+	public boolean updateBooking(BookingDTO bookingInfo, String uniqueBookingId, Long bookingId) {
+		Optional<Booking> b = null;
+		if (uniqueBookingId == null) {
+			b = bookingRepo.findById(bookingId);
+		} else if (bookingInfo == null) {
+			b = bookingRepo.findByBookingUniqueId(uniqueBookingId);
+		} else {
+			throw new NotFoundException(Constant.BOOKING_DETAILS_NOT_FOUND);
+		}
+		BeanUtils.copyProperties(bookingInfo, b.get());
+		bookingRepo.save(b.get());
+		return true;
 	}
 
 	@Override
@@ -97,7 +105,11 @@ public class BookingServiceImpl implements BookingService {
 		}
 		maybeScreen.setBookingCounter(maybeScreen.getBookingCounter() - 1);
 		screens.updateScreen(maybeScreen);
+		String msg = "Welcome " + maybeBooking.get().getName() + "\nYour booking is Cancled!\n" + "Booking ID "
+				+ maybeBooking.get().getBookingUniqueId();
+		String subject = "Your booking is Cancled for " + maybeBooking.get().getShow().getMovie().getMovieName();
 		maybeBooking.get().setShow(null);
+		sendMail(maybeBooking.get().getEmailId(), msg, subject);
 		bookingRepo.delete(maybeBooking.get());
 		return true;
 	}

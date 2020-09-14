@@ -22,48 +22,36 @@ public class HallServiceImp implements HallService {
 	private HallRepo hallRepo;
 
 	public void registerHall(CinemaHallDTO hallDetails) {
-		Optional<CinemaHall> maybeHallExists = hallRepo.findByChCityAndChName(hallDetails.getChCity(),
-				hallDetails.getChName());
-		if (maybeHallExists.isPresent()) {
+		if (getHallByCithAndName(hallDetails.getChCity(), hallDetails.getChName()).isPresent())
 			throw new AlreadyRegisteredException(Constant.HALL_DETAILS_ALREADY_REGISTER);
-		}
 		CinemaHall hallEntity = new CinemaHall();
 		BeanUtils.copyProperties(hallDetails, hallEntity);
 		hallRepo.save(hallEntity);
 	}
 
-	public CinemaHall getHallById(Long hallId) {
-		Optional<CinemaHall> maybeHall = hallRepo.findById(hallId);
-		if (!maybeHall.isPresent()) {
-			throw new NotFoundException(Constant.HALL_DETAILS_NOT_FOUND);
-		}
-		return maybeHall.get();
-	}
-
 	@Override
-	public List<CinemaHall> getHalls(String chName, String chCity) {
-		return hallRepo.search(chName, chCity);
+	public List<CinemaHall> getHalls(String chName, String chCity, Long hallId) {
+		return hallRepo.search(chName, chCity, hallId);
 	}
 
 	@Override
 	public void updateHall(CinemaHall request) {
-		Optional<CinemaHall> hall = hallRepo.findById(request.getChId());
-		Optional<CinemaHall> maybeHall = hallRepo.findByChCityAndChName(request.getChCity(), request.getChName());
-		if (!hall.isPresent()) {
+		if (getHalls(null, null, request.getChId()) == null)
 			throw new NotFoundException(Constant.HALL_DETAILS_NOT_FOUND);
-		} else if (maybeHall.isPresent()) {
+		if (getHallByCithAndName(request.getChCity(), request.getChName()).isPresent())
 			throw new AlreadyRegisteredException(Constant.HALL_DETAILS_ALREADY_REGISTER);
-		} else {
-			hallRepo.save(request);
-		}
+		hallRepo.save(request);
 	}
 
 	@Override
 	public void deleteHall(Long hallId) {
-		Optional<CinemaHall> maybehall = hallRepo.findById(hallId);
-		if (!maybehall.isPresent()) {
+		CinemaHall hall = getHalls(null, null, hallId).get(0);
+		if (hall == null)
 			throw new NotFoundException(Constant.HALL_DETAILS_NOT_FOUND);
-		}
-		hallRepo.deleteById(maybehall.get().getChId());
+		hallRepo.deleteById(hall.getChId());
+	}
+
+	private Optional<CinemaHall> getHallByCithAndName(String chCity, String chName) {
+		return hallRepo.findByChCityAndChName(chCity, chName);
 	}
 }

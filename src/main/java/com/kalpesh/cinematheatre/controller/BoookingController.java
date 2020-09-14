@@ -29,7 +29,7 @@ public class BoookingController {
 	@Autowired
 	private BookingService bookingService;
 
-	@PostMapping(value = "/{showId}", headers = "Accept=application/json")
+	@PostMapping(value = "/{showId}")
 	public ResponseEntity<Response> addShow(@RequestBody BookingDTO request, @PathVariable Long showId) {
 		String msg = bookingService.bookShow(request, showId);
 		return ResponseEntity.status(HttpStatus.OK)
@@ -46,10 +46,9 @@ public class BoookingController {
 
 	@PutMapping("/")
 	public ResponseEntity<Response> updateBookingInfo(@RequestBody BookingDTO bookingInfo,
-			@RequestParam(name = "Booking Id") String bookingId, @RequestParam(name = "Email Id") String emailId,
-			@RequestParam(name = "Mobile Number") Long mobileNumber,
-			@RequestParam(name = "User Name") String userName) {
-		if (bookingService.updateBooking(bookingInfo, bookingId, emailId, mobileNumber, userName)) {
+			@RequestParam(name = "Unique Booking Id", required = false) String uniqueBookingId,
+			@RequestParam(required = false) Long bookingId) {
+		if (bookingService.updateBooking(bookingInfo, uniqueBookingId, bookingId)) {
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(new Response(Constant.BOOKING_DETAILS_UPDATED, Constant.OK_RESPONSE_CODE));
 		}

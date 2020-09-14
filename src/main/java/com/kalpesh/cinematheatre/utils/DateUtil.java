@@ -2,7 +2,9 @@ package com.kalpesh.cinematheatre.utils;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class DateUtil {
 	private DateUtil() {
@@ -18,4 +20,8 @@ public class DateUtil {
 		return time.format(formatter);
 	}
 
+	public static LocalDate dateToLocalDate(Date date) {
+		return LocalDate.parse(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+				.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+	}
 }

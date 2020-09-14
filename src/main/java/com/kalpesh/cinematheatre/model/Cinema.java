@@ -35,18 +35,6 @@ public class Cinema {
 
 	public Cinema() {
 	}
-//
-//	public Cinema(Long movieId, String movieName, String movieGenre, String director, String producer,
-//			LocalDate releasedDate, Show movieShow) {
-//		super();
-//		this.movieId = movieId;
-//		this.movieName = movieName;
-//		this.movieGenre = movieGenre;
-//		this.director = director;
-//		this.producer = producer;
-//		this.releasedDate = releasedDate;
-//		this.movieShow = movieShow;
-//	}
 
 	public Long getMovieId() {
 		return movieId;
@@ -57,35 +45,35 @@ public class Cinema {
 	}
 
 	public String getMovieName() {
-		return movieName;
+		return movieName.toLowerCase();
 	}
 
 	public void setMovieName(String movieName) {
-		this.movieName = movieName;
+		this.movieName = movieName.toLowerCase();
 	}
 
 	public String getMovieGenre() {
-		return movieGenre;
+		return movieGenre.toLowerCase();
 	}
 
 	public void setMovieGenre(String movieGenre) {
-		this.movieGenre = movieGenre;
+		this.movieGenre = movieGenre.toLowerCase();
 	}
 
 	public String getDirector() {
-		return director;
+		return director.toLowerCase();
 	}
 
 	public void setDirector(String director) {
-		this.director = director;
+		this.director = director.toLowerCase();
 	}
 
 	public String getProducer() {
-		return producer;
+		return producer.toLowerCase();
 	}
 
 	public void setProducer(String producer) {
-		this.producer = producer;
+		this.producer = producer.toLowerCase();
 	}
 
 	public LocalDate getReleasedDate() {

@@ -11,8 +11,7 @@ public interface BookingService {
 
 	public List<Booking> getBookings(String bookingUniqueId, String name, String email, Long mobileNumber);
 
-	public boolean updateBooking(BookingDTO bookingInfo, String bookingId, String emailId, Long mobileNumber,
-			String userName);
+	public boolean updateBooking(BookingDTO bookingInfo, String uniqueBookingId, Long bookingId);
 
 	public boolean cancleBooking(String bookingId);
 

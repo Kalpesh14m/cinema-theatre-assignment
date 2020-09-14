@@ -15,8 +15,8 @@ import com.kalpesh.cinematheatre.repo.custom.CustomRepo;
 @Transactional
 public interface CinemaRepo extends JpaRepository<Cinema, Long>, CustomRepo {
 
-	Optional<Cinema> findByReleasedDateAndMovieName(LocalDate releasedDate, String movieName);
+	public Optional<Cinema> findByReleasedDateAndMovieName(LocalDate releasedDate, String movieName);
 
-	Optional<Cinema> findByMovieName(String movieName);
+	public Optional<Cinema> findByMovieName(String movieName);
 
 }

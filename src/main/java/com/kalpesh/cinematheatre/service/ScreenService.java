@@ -7,11 +7,11 @@ import com.kalpesh.cinematheatre.model.dto.ScreenDTO;
 
 public interface ScreenService {
 
-	public boolean addScreen(ScreenDTO address, Long userId);
+	public void addScreen(ScreenDTO address, Long userId);
 
 	public List<Screen> getScreenByHallId(Long userId);
 
-	public boolean updateScreen(Screen address);
+	public void updateScreen(Screen address);
 
 	public void deleteScreen(Long screenId);
 }

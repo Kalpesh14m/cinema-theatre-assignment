@@ -33,28 +33,22 @@ public class HallController {
 	@Autowired
 	private HallService hallService;
 
-	@ApiOperation(value = "Register new Cinema Hall in database and return response")
-	@PostMapping(value = "/", headers = "Accept=application/json")
+	@ApiOperation(value = "Register new Cinema Hall in database")
+	@PostMapping(value = "/")
 	public ResponseEntity<Response> register(
-			@ApiParam(value = "Taking CinemaHall DTO as a RequestBody", required = true) @RequestBody CinemaHallDTO request) {
+			@ApiParam(value = "Taking CinemaHall DTO as a RequestBody") @RequestBody CinemaHallDTO request) {
 		hallService.registerHall(request);
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new Response(Constant.HALL_DETAILS_REGISTER_SUCESSFULLY, Constant.OK_RESPONSE_CODE));
 	}
 
-	@ApiOperation(value = "Get Cinema hall with hall ID")
-	@GetMapping("/{hallId}")
-	public CinemaHall hallById(
-			@ApiParam(value = "Taking HallId as a path Variable", required = true) @PathVariable Long hallId) {
-		return hallService.getHallById(hallId);
-	}
-
 	@ApiOperation(value = "Get all registered Cinema halls")
 	@GetMapping("/")
 	public List<CinemaHall> halls(
-			@ApiParam(value = "Taking Hall Name or Hall City for search operation", required = false) @RequestParam(required = false, name = "Hall_Name") String chName,
-			@RequestParam(required = false, name = "Hall_City") String chCity) {
-		return hallService.getHalls(chName, chCity);
+			@ApiParam(value = "Taking Hall Name or Hall City for search operation") @RequestParam(required = false, name = "Hall Name") String chName,
+			@RequestParam(required = false, name = "Hall City") String chCity,
+			@RequestParam(required = false) Long hallId) {
+		return hallService.getHalls(chName, chCity, hallId);
 	}
 
 	@ApiOperation(value = "Update Cinema Hall Information")
@@ -66,7 +60,7 @@ public class HallController {
 	}
 
 	@DeleteMapping("/{hallId}")
-	public ResponseEntity<Response> deleteSource(@PathVariable Long hallId) {
+	public ResponseEntity<Response> deleteHall(@PathVariable Long hallId) {
 		hallService.deleteHall(hallId);
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(new Response(Constant.HALL_DETAILS_DELETED_SUCESSFULLY, Constant.OK_RESPONSE_CODE));

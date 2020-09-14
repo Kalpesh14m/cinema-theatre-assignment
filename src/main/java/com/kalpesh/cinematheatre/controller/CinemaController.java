@@ -1,6 +1,10 @@
 package com.kalpesh.cinematheatre.controller;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kalpesh.cinematheatre.constant.Constant;
@@ -32,9 +37,9 @@ public class CinemaController {
 	private CinemaService cinemaService;
 
 	@ApiOperation(value = "Register new Cinema in database and return response")
-	@PostMapping(value = "/", headers = "Accept=application/json")
+	@PostMapping(value = "/")
 	public ResponseEntity<Response> register(
-			@ApiParam(value = "Taking CinemaDTO as a RequestBody", required = true) @RequestBody CinemaDTO request) {
+			@ApiParam(value = "Taking CinemaDTO as a RequestBody") @RequestBody CinemaDTO request) {
 		cinemaService.registerCinema(request);
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new Response(Constant.CINEMA_DETAILS_REGISTER_SUCESSFULLY, Constant.OK_RESPONSE_CODE));
@@ -42,9 +47,18 @@ public class CinemaController {
 
 	@ApiOperation(value = "Get Cinema with cinema ID")
 	@GetMapping("/{cinemaId}")
-	public Cinema hallById(
-			@ApiParam(value = "Taking cinemaId as a path Variable", required = true) @PathVariable Long cinemaId) {
+	public Cinema hallById(@ApiParam(value = "Taking cinemaId as a path Variable") @PathVariable Long cinemaId) {
 		return cinemaService.getCinemaById(cinemaId);
+	}
+
+	@ApiOperation(value = "Get Cinema with cinema ID")
+	@GetMapping("/")
+	public List<Cinema> getAllMovies(
+			@ApiParam(value = "Taking cinemaId as a path Variable") @RequestParam(required = false) String movieName,
+			@RequestParam(required = false) String movieGenre, @RequestParam(required = false) String director,
+			@RequestParam(required = false) String producer,
+			@RequestParam(name = "Released Date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date releasedDate) {
+		return cinemaService.getCinemaByFilter(movieName, movieGenre, director, producer, releasedDate);
 	}
 
 	@ApiOperation(value = "Update Movie Information")

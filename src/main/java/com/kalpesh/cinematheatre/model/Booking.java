@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "booking")
 public class Booking {
@@ -34,20 +36,21 @@ public class Booking {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "show_id")
+	@JsonIgnore
 	private Show show;
 
 	public Booking() {
 		bookingUniqueId = UUID.randomUUID().toString();
 	}
 
-	public Booking(Long bookingId, String name, Long mobileNumber, String emailId) {
-		super();
-		this.bookingId = bookingId;
-		this.name = name;
-		this.mobileNumber = mobileNumber;
-		this.emailId = emailId;
-		this.bookingUniqueId = UUID.randomUUID().toString();
-	}
+//	public Booking(Long bookingId, String name, Long mobileNumber, String emailId) {
+//		super();
+//		this.bookingId = bookingId;
+//		this.name = name;
+//		this.mobileNumber = mobileNumber;
+//		this.emailId = emailId;
+//		this.bookingUniqueId = UUID.randomUUID().toString();
+//	}
 
 	public Long getBookingId() {
 		return bookingId;
@@ -58,11 +61,11 @@ public class Booking {
 	}
 
 	public String getName() {
-		return name;
+		return name.toLowerCase();
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = name.toLowerCase();
 	}
 
 	public Long getMobileNumber() {
@@ -74,11 +77,11 @@ public class Booking {
 	}
 
 	public String getEmailId() {
-		return emailId;
+		return emailId.toLowerCase();
 	}
 
 	public void setEmailId(String emailId) {
-		this.emailId = emailId;
+		this.emailId = emailId.toLowerCase();
 	}
 
 	public Show getShow() {

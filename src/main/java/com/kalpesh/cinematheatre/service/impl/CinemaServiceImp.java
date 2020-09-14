@@ -1,5 +1,7 @@
 package com.kalpesh.cinematheatre.service.impl;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
@@ -22,11 +24,8 @@ public class CinemaServiceImp implements CinemaService {
 	private CinemaRepo cinemaRepo;
 
 	public void registerCinema(CinemaDTO cinemaDetails) {
-		Optional<Cinema> maybeMovieExists = cinemaRepo.findByReleasedDateAndMovieName(cinemaDetails.getReleasedDate(),
-				cinemaDetails.getMovieName());
-		if (maybeMovieExists.isPresent()) {
+		if (getMovieWithNameAndReleaseDate(cinemaDetails).isPresent())
 			throw new AlreadyRegisteredException(Constant.CINEMA_DETAILS_ALREADY_REGISTER);
-		}
 		Cinema cinemaEntity = new Cinema();
 		BeanUtils.copyProperties(cinemaDetails, cinemaEntity);
 		cinemaRepo.save(cinemaEntity);
@@ -34,37 +33,35 @@ public class CinemaServiceImp implements CinemaService {
 
 	public Cinema getCinemaById(Long cinemaId) {
 		Optional<Cinema> maybeCinema = cinemaRepo.findById(cinemaId);
-		if (!maybeCinema.isPresent()) {
+		if (!maybeCinema.isPresent())
 			throw new NotFoundException(Constant.CINEMA_DETAILS_NOT_FOUND);
-		}
 		return maybeCinema.get();
 	}
 
-//	@Override
-//	public List<CinemaHall> getHalls(String chName, String chCity) {
-//		return cinemaRepo.search(chName, chCity);
-//	}
-
 	@Override
 	public void updateCinema(CinemaUpdateDTO request) {
-		Optional<Cinema> cinema = cinemaRepo.findById(request.getMovieId());
-		if (!cinema.isPresent()) {
+		Cinema cinema = getCinemaById(request.getMovieId());
+		if (cinema == null)
 			throw new NotFoundException(Constant.CINEMA_DETAILS_NOT_FOUND);
-		}
-		cinema.get().setDirector(request.getDirector());
-		cinema.get().setMovieId(request.getMovieId());
-		cinema.get().setProducer(request.getProducer());
-		cinema.get().setMovieGenre(request.getMovieGenre());
-		cinemaRepo.save(cinema.get());
-
+		BeanUtils.copyProperties(request, cinema);
+		cinemaRepo.save(cinema);
 	}
 
 	@Override
 	public void deleteCinema(Long cinemaId) {
-		Optional<Cinema> maybehall = cinemaRepo.findById(cinemaId);
-		if (!maybehall.isPresent()) {
+		Cinema maybehall = getCinemaById(cinemaId);
+		if (maybehall == null)
 			throw new NotFoundException(Constant.CINEMA_DETAILS_NOT_FOUND);
-		}
-		cinemaRepo.deleteById(maybehall.get().getMovieId());
+		cinemaRepo.deleteById(maybehall.getMovieId());
+	}
+
+	@Override
+	public List<Cinema> getCinemaByFilter(String movieName, String movieGenre, String director, String producer,
+			Date releasedDate) {
+		return cinemaRepo.filterByPara(movieName, movieGenre, director, producer, releasedDate);
+	}
+
+	private Optional<Cinema> getMovieWithNameAndReleaseDate(CinemaDTO cinemaDetails) {
+		return cinemaRepo.findByReleasedDateAndMovieName(cinemaDetails.getReleasedDate(), cinemaDetails.getMovieName());
 	}
 }

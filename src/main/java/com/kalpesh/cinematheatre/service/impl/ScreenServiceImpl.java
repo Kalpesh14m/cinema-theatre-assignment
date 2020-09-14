@@ -26,45 +26,46 @@ public class ScreenServiceImpl implements ScreenService {
 	private ScreenRepo screenRepo;
 
 	@Override
-	public boolean addScreen(ScreenDTO screen, Long hallId) {
-		Optional<CinemaHall> maybeHall = hallRepo.findById(hallId);
-		if (!maybeHall.isPresent()) {
+	public void addScreen(ScreenDTO screen, Long hallId) {
+		Optional<CinemaHall> maybeHall = getHallById(hallId);
+		if (!maybeHall.isPresent())
 			throw new NotFoundException(Constant.HALL_DETAILS_NOT_FOUND);
-		}
 		Screen sc = new Screen();
 		BeanUtils.copyProperties(screen, sc);
 		sc.setHall(maybeHall.get());
 		screenRepo.save(sc);
-		return true;
 	}
 
 	@Override
 	public List<Screen> getScreenByHallId(Long hallId) {
-		Optional<CinemaHall> maybeHall = hallRepo.findById(hallId);
-		if (!maybeHall.isPresent()) {
+		Optional<CinemaHall> maybeHall = getHallById(hallId);
+		if (!maybeHall.isPresent())
 			throw new NotFoundException(Constant.HALL_DETAILS_NOT_FOUND);
-		}
 		return maybeHall.get().getScreen();
 	}
 
 	@Override
-	public boolean updateScreen(Screen screenObj) {
-		Optional<Screen> maybeScreenPresent = screenRepo.findById(screenObj.getScreenId());
-		if (!maybeScreenPresent.isPresent()) {
+	public void updateScreen(Screen screenObj) {
+		Optional<Screen> maybeScreenPresent = getScreenById(screenObj.getScreenId());
+		if (!maybeScreenPresent.isPresent())
 			throw new NotFoundException(Constant.SCREEN_DETAILS_NOT_FOUND);
-		}
 		screenObj.setHall(maybeScreenPresent.get().getHall());
 		screenRepo.save(screenObj);
-		return true;
 	}
 
 	@Override
 	public void deleteScreen(Long screenId) {
-		Optional<Screen> maybeScreen = screenRepo.findById(screenId);
-		if (!maybeScreen.isPresent()) {
+		Optional<Screen> maybeScreen = getScreenById(screenId);
+		if (!maybeScreen.isPresent())
 			throw new NotFoundException(Constant.SCREEN_DETAILS_NOT_FOUND);
-		}
 		hallRepo.deleteById(maybeScreen.get().getScreenId());
 	}
 
+	private Optional<Screen> getScreenById(Long screenId) {
+		return screenRepo.findById(screenId);
+	}
+
+	private Optional<CinemaHall> getHallById(Long hallId) {
+		return hallRepo.findById(hallId);
+	}
 }
